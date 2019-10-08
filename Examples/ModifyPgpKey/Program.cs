@@ -16,10 +16,10 @@ namespace ModifyPgpKey
             }
 
             Console.WriteLine("Search Bob's PGP key in the default keyring..");
-            
+
             const string SEARCHSTR = "bob@home.internal";
             IKeyStore keyring = ctx.KeyStore;
-            
+
             // retrieve all keys that have Bob's email address 
             Key[] keys = keyring.GetKeyList(SEARCHSTR, false);
             if (keys == null || keys.Length == 0)
@@ -43,13 +43,13 @@ namespace ModifyPgpKey
                 throw new InvalidKeyException();
             }
             Console.WriteLine("\nUsing key {0}", bob.Fingerprint);
-            
+
             // Change Bob's passphrase. This will usually pop-up a pin-entry window!
             ChangePassphrase(ctx, bob);
-            
+
             // Add another PGP sub key to Bob's key.
             AddSubKey(ctx, bob);
-            
+
             // Reload Bobs key (otherwise the new sub key is NOT visible)
             bob = (PgpKey)keyring.GetKey(bob.Fingerprint, false);
 
@@ -116,6 +116,8 @@ namespace ModifyPgpKey
         private static void ChangePassphrase(Context ctx, PgpKey bob) {
             Console.WriteLine("Change the secret key's password.");
 
+            SelectPinEntryMode(ctx);
+
             PgpPassphraseOptions passopts = new PgpPassphraseOptions {
                 // We need to specify our own passphrase callback methods
                 // in case the user does not use gpg-agent.
@@ -126,6 +128,42 @@ namespace ModifyPgpKey
             };
 
             bob.ChangePassphrase(ctx, passopts);
+        }
+
+        private static void SelectPinEntryMode(Context ctx)
+        {
+            int tries = 0;
+            
+            bool answered = false;
+            while (!answered && tries++ < 4)
+            {
+                Console.WriteLine("Do you want the library to show a popup or do you want to have the code request the password here on the cmd line?");
+                Console.WriteLine("1. popup (default)");
+                Console.WriteLine("2. cmd line");
+                var answer = Console.ReadLine();
+                switch (answer)
+                {
+                    case "2":
+                        Console.WriteLine("Using the cmd line pin entry method");
+                        ctx.PinentryMode = PinentryMode.Loopback;
+                        answered = true;
+                        break;
+                    case "":
+                    case "1":
+                        Console.WriteLine("Using the popup pin entry method");
+                        ctx.PinentryMode = PinentryMode.Default;
+                        answered = true;
+                        break;
+                    default:
+                        Console.WriteLine("please answer with 1,2,<enter>");
+                        break;
+                }
+            }
+            if (!answered)
+            {
+                Console.WriteLine("no good answer given");
+                Environment.Exit(-1);
+            }
         }
 
         private static void AddSubKey(Context ctx, PgpKey bob) {
@@ -170,7 +208,7 @@ namespace ModifyPgpKey
              + "\nPassword: ");
 
             var read_line = Console.ReadLine();
-            
+
             if (read_line != null) {
                 passwd = read_line.ToCharArray();
                 return PassphraseResult.Success;
@@ -197,15 +235,15 @@ namespace ModifyPgpKey
              + "\nNew password: ");
 
             var read_line = Console.ReadLine();
-            
+
             if (read_line != null) {
                 passwd = read_line.ToCharArray();
                 return PassphraseResult.Success;
             }
 
             return PassphraseResult.Canceled;
-        }       
+        }
 
     }
- 
+
 }
