@@ -10,4 +10,10 @@
     <ProjectReference Include="..\..\..\gpgme-sharp\gpgme-sharp.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="daniel.pub">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
