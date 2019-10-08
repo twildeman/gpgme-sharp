@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "ExportKey": {
+    "DataBufferTest": {
         "commandName": "Project",
         "environmentVariables": {
-            "GPGME_DEBUG": "8;ExportKey.log"
+            "GPGME_DEBUG": "8;DataBufferTest.log"
         },
         "nativeDebugging": true
     }

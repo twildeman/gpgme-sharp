@@ -1,0 +1,11 @@
+{
+    "profiles": {
+        "CreatePgpKey": {
+            "commandName": "Project",
+            "environmentVariables": {
+                "GPGME_DEBUG": "9;CreatePgpKey.log"
+            },
+            "nativeDebugging": true
+        }
+    }
+}

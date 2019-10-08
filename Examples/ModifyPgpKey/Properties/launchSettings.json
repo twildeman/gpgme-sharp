@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "ExportKey": {
+    "ModifyPgpKey": {
         "commandName": "Project",
         "environmentVariables": {
-            "GPGME_DEBUG": "8;ExportKey.log"
+            "GPGME_DEBUG": "8;ModifyPgpKey.log"
         },
         "nativeDebugging": true
     }

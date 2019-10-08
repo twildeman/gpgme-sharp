@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "ExportKey": {
+    "DeletePgpKey": {
         "commandName": "Project",
         "environmentVariables": {
-            "GPGME_DEBUG": "8;ExportKey.log"
+            "GPGME_DEBUG": "9;DeletePgpKey.log"
         },
         "nativeDebugging": true
     }

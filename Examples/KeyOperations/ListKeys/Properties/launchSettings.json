@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "ListKeys": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "GPGME_DEBUG": "8;ListKeys.log"
+      },
+      "nativeDebugging": true
+    }
+  }
+}

@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "ExportKey": {
+    "ImportKey2": {
         "commandName": "Project",
         "environmentVariables": {
-            "GPGME_DEBUG": "8;ExportKey.log"
+            "GPGME_DEBUG": "8;ImportKey2.log"
         },
         "nativeDebugging": true
     }
