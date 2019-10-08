@@ -46,6 +46,7 @@ namespace GPGME.Native.Shared
         public Func<IntPtr, IntPtr> gpgme_op_decrypt_result { get; set; }
         public Func<IntPtr, IntPtr, IntPtr, int> gpgme_op_decrypt_verify { get; set; }
         public Func<IntPtr, IntPtr, int, int> gpgme_op_delete { get; set; }
+        public Func<IntPtr, IntPtr, gpgme_deletekey_flags_t, int> gpgme_op_delete_ext { get; set; }
         public Func<IntPtr, IntPtr, gpgme_edit_cb_t, IntPtr, IntPtr, int> gpgme_op_edit { get; set; }
         public Func<IntPtr, IntPtr[], gpgme_encrypt_flags_t, IntPtr, IntPtr, int> gpgme_op_encrypt { get; set; }
         public Func<IntPtr, IntPtr> gpgme_op_encrypt_result { get; set; }

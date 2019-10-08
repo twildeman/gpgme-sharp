@@ -289,6 +289,11 @@ namespace Libgpgme
         }
 
         public void DeleteKey(Key key, bool deleteSecret) {
+            DeleteKey(key, deleteSecret, false);
+        }
+
+        public void DeleteKey(Key key, bool deleteSecret, bool suppressUserInteraction)
+        {
             if (Context == null ||
                 !(Context.IsValid)) {
                 throw new InvalidContextException();
@@ -301,7 +306,14 @@ namespace Libgpgme
             int secret = deleteSecret ? 1 : 0;
 
             lock (Context.CtxLock) {
-                int err = libgpgme.NativeMethods.gpgme_op_delete(Context.CtxPtr, key.KeyPtr, secret);
+                int err = 0;
+                if (suppressUserInteraction)
+                {
+                    gpgme_deletekey_flags_t delete = (deleteSecret ? gpgme_deletekey_flags_t.GPGME_DELETE_ALLOW_SECRET : 0) | gpgme_deletekey_flags_t.GPGME_DELETE_FORCE;
+                    err = libgpgme.NativeMethods.gpgme_op_delete_ext(Context.CtxPtr, key.KeyPtr, delete);
+                }
+                else
+                    err = libgpgme.NativeMethods.gpgme_op_delete(Context.CtxPtr, key.KeyPtr, secret);
 
                 gpg_err_code_t errcode = libgpgme.gpgme_err_code(err);
 

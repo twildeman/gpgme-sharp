@@ -179,6 +179,14 @@ namespace Libgpgme.Interop
         GPGME_KEYLIST_MODE_VALIDATE = 256,
     }
 
+    /* Flags for the key delete functions.  */
+
+    public enum gpgme_deletekey_flags_t
+    {
+        GPGME_DELETE_ALLOW_SECRET = (1 << 0),  /* Also delete secret key.     */
+        GPGME_DELETE_FORCE        = (1 << 1)  /* Do not ask user to confirm.  */
+    }
+
     /* Flags for the audit log functions.  */
 
     [Flags]

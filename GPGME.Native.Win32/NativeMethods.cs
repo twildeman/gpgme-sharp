@@ -605,6 +605,14 @@ namespace GPGME.Native.Unix
             [In] IntPtr key,
             [In] int allow_secret);
 
+        // allows flag for deleting from the keyring without prompt. 
+        // GPGME_DELETE_FORCE
+        [DllImport(LIBRARY_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int gpgme_op_delete_ext(
+            [In] IntPtr ctx,
+            [In] IntPtr key,
+            [In] gpgme_deletekey_flags_t deleteflags);
+
         /* Start a trustlist operation within CTX, searching for trust items
            which match PATTERN.  */
 
@@ -937,6 +945,7 @@ namespace GPGME.Native.Unix
                 gpgme_op_decrypt_result = gpgme_op_decrypt_result,
                 gpgme_op_decrypt_verify = gpgme_op_decrypt_verify,
                 gpgme_op_delete = gpgme_op_delete,
+                gpgme_op_delete_ext = gpgme_op_delete_ext,
                 gpgme_op_edit = gpgme_op_edit,
                 gpgme_op_encrypt = gpgme_op_encrypt,
                 gpgme_op_encrypt_result = gpgme_op_encrypt_result,
